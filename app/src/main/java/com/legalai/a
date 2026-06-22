@@ -1,0 +1,3 @@
+package com.legalai.app.data.local.entity
+
+enum class DocumentType {
