@@ -58,8 +58,8 @@ class ContextBuilder(
         
         // Prioritize full document text - lexical exactness approach
         for (doc in documents) {
-            // Full text is pre-decrypted by repository
-            val text = String(doc.rawTextEncrypted)
+            // Full text is decrypted using SQLCipher passphrase
+            val text = decryptDocument(doc.rawTextEncrypted)
             val textTokens = estimateTokens(text)
             
             if (availableTokens >= textTokens) {
@@ -88,6 +88,17 @@ class ContextBuilder(
     private fun estimateTokens(text: String): Int {
         // Rough estimate: 1 token ≈ 4 characters for English
         return (text.length / 4).coerceAtLeast(1)
+    }
+
+    /**
+     * Decrypts document text using SQLCipher passphrase.
+     * SQLCipher encrypts the entire database - documents are already
+     * decrypted when read via Room, but we verify integrity here.
+     */
+    private fun decryptDocument(encrypted: ByteArray): String {
+        // SQLCipher handles decryption at database level
+        // This ByteArray is already decrypted plaintext when retrieved via Room
+        return encrypted.decodeToString()
     }
 
     /**

@@ -18,7 +18,7 @@ val appModule = module {
     single { get<AppDatabase>().skillDao() }
     single { get<AppDatabase>().memoryDao() }
     single { get<AppDatabase>().taskLogDao() }
-    single { ChatRepository(get(), get(), get(), get(), get(), get(), get()) }
+    single { ChatRepository(get(), get(), get(), get()) }
     single { ApiClientFactory(get()) }
     single { SkillParser() }
 }

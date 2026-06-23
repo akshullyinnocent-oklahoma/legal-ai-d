@@ -6,16 +6,15 @@ import com.legalai.app.data.ChatRepository
 import com.legalai.app.data.model.ContextBuilder
 import com.legalai.app.data.remote.api.*
 import com.legalai.app.data.local.entity.Role
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-@HiltViewModel
-class ChatViewModel @Inject constructor(
+class ChatViewModel(
     private val repository: ChatRepository,
     private val contextBuilder: ContextBuilder
-) : ViewModel() {
+) : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(ChatUiState())
     val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
 
